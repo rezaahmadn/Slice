@@ -25,6 +25,9 @@ struct MenuBarView: View {
                         timer.pause()
                     } else {
                         timer.start()
+                        // First press asks macOS for notification permission;
+                        // later presses return instantly with the saved answer.
+                        Task { await Notifications.requestAuthorization() }
                     }
                 }
                 .keyboardShortcut(.defaultAction)

@@ -2,7 +2,7 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-**Status:** work in progress — Phase 3 of 7 (menu bar UI). The timer works: Start, Pause, Reset from the menu bar. Notifications are next.
+**Status:** work in progress — Phase 4 of 7 (notifications). Timer works and notifies with a banner and sound when a phase ends. Settings, icon and a downloadable release are next.
 
 ## Build from source
 

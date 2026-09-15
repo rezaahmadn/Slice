@@ -10,9 +10,11 @@
 		109AB33CA097AB6A95C5A641 /* PomodoroTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4109E3BE24B14E602030970D /* PomodoroTimer.swift */; };
 		270DA45D91929F1668A68F57 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3483908B057D6498F3453650 /* Assets.xcassets */; };
 		2F49EB11660DDEB0B00AB719 /* PomodoroTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */; };
+		325B26F7A56BD092633D8DCD /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */; };
 		3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20DC89A0CC4D9918729949 /* MenuBarView.swift */; };
 		42C2DBE678C0186CB0699C50 /* SliceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5F55D50528A5A10EB3BEE /* SliceApp.swift */; };
 		73D020E368739BCADDA8C831 /* SliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */; };
+		EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F497FC8CD088E3CDE8F7EE /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,7 +31,9 @@
 		01F5F55D50528A5A10EB3BEE /* SliceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliceApp.swift; sourceTree = "<group>"; };
 		04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimerTests.swift; sourceTree = "<group>"; };
 		0E26E5CAA50D7CE0D0FE4B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		13F497FC8CD088E3CDE8F7EE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3483908B057D6498F3453650 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsTests.swift; sourceTree = "<group>"; };
 		4109E3BE24B14E602030970D /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		410D313DA205222E05318D9D /* SliceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CD15552C07A47D2D8E1D2C /* Slice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slice.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -41,6 +45,7 @@
 		3870AC8F31EF86C2D3FD1903 /* SliceTests */ = {
 			isa = PBXGroup;
 			children = (
+				3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */,
 				04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */,
 				B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */,
 			);
@@ -52,6 +57,7 @@
 			children = (
 				0E26E5CAA50D7CE0D0FE4B7A /* Info.plist */,
 				EC20DC89A0CC4D9918729949 /* MenuBarView.swift */,
+				13F497FC8CD088E3CDE8F7EE /* Notifications.swift */,
 				4109E3BE24B14E602030970D /* PomodoroTimer.swift */,
 				01F5F55D50528A5A10EB3BEE /* SliceApp.swift */,
 				81429C9705D6D47A9055149E /* Resources */,
@@ -180,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */,
+				EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */,
 				109AB33CA097AB6A95C5A641 /* PomodoroTimer.swift in Sources */,
 				42C2DBE678C0186CB0699C50 /* SliceApp.swift in Sources */,
 			);
@@ -189,6 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				325B26F7A56BD092633D8DCD /* NotificationsTests.swift in Sources */,
 				2F49EB11660DDEB0B00AB719 /* PomodoroTimerTests.swift in Sources */,
 				73D020E368739BCADDA8C831 /* SliceTests.swift in Sources */,
 			);
