@@ -1,0 +1,509 @@
+# Plan: Phase 1 — Project Skeleton
+
+## Summary
+Bootstrap the Slice repo into a buildable macOS menu bar app. After this phase, `xcodebuild` (or Cmd+R in Xcode) produces `Slice.app` that shows a timer glyph plus `25:00` in the menu bar, has no Dock icon, passes one placeholder test, and a README explains how to build it. No timer logic yet.
+
+**Every file below was dry-run on this machine on 2026-09-15 (macOS 26.6.2, Xcode 26.2, XcodeGen 2.46.0): build succeeded, test succeeded, app launched, panel opened.** Copy the contents exactly. Do not improvise alternatives.
+
+## User Story
+As Reza (developer learning Swift),
+I want a minimal Xcode project that already runs as a menu bar app,
+So that every later phase only adds Swift files and never touches project configuration.
+
+## Problem → Solution
+Repo with only a PRD and `.gitignore` → Xcode project + `SliceApp.swift` with a static `MenuBarExtra`, unit-test target wired, README, all committed and pushed.
+
+## Metadata
+- **Complexity**: Small
+- **Source PRD**: `.claude/PRPs/prds/slice.prd.md`
+- **PRD Phase**: 1 — Project skeleton
+- **Estimated Files**: 7 hand-written + 2 generated (`Slice.xcodeproj/`, `Slice/Info.plist`)
+
+---
+
+## UX Design
+
+### Before
+```
+┌──────────────────────────────┐
+│ Menu bar: (nothing)          │
+│ Dock: (nothing)              │
+└──────────────────────────────┘
+```
+
+### After
+```
+┌──────────────────────────────┐
+│ Menu bar:  ... ⏱ 25:00 ...   │  ← click opens panel: "Slice / Timer coming soon. / [Quit Slice]"
+│ Dock: (nothing, LSUIElement) │
+└──────────────────────────────┘
+```
+
+### Interaction Changes
+| Touchpoint | Before | After | Notes |
+|---|---|---|---|
+| Menu bar | none | SF Symbol `timer` + static `25:00` | Text hardcoded this phase |
+| Click on item | none | Small panel with placeholder text and Quit button | `.menuBarExtraStyle(.window)` |
+| Dock | none | Still none | `LSUIElement = true` |
+
+---
+
+## Mandatory Reading
+
+| Priority | File | Lines | Why |
+|---|---|---|---|
+| P0 | `.claude/PRPs/prds/slice.prd.md` | "Technical Approach" and "Decisions Log" sections | Stack, target, signing, one-type-per-file rule |
+| P1 | `.gitignore` | all | Already ignores `DerivedData/`, `xcuserdata/`, `*.zip`. Do not edit. |
+
+## External Documentation
+
+| Topic | Source | Key Takeaway |
+|---|---|---|
+| XcodeGen spec | https://github.com/yonaskolb/XcodeGen/blob/master/Docs/ProjectSpec.md | `project.yml` → `xcodegen generate` → `Slice.xcodeproj`. `info.properties` writes `Info.plist`. |
+| MenuBarExtra | https://developer.apple.com/documentation/swiftui/menubarextra | `label:` closure = what appears in the bar; `.menuBarExtraStyle(.window)` = popover-like panel. |
+| LSUIElement | https://developer.apple.com/documentation/bundleresources/information_property_list/lsuielement | `true` hides Dock icon and app menu. |
+| Swift Testing | https://developer.apple.com/documentation/testing | `import Testing`, `@Test`, `#expect`. Not XCTest. |
+
+Verified facts (from the dry run — treat as law):
+
+KEY_INSIGHT: XcodeGen 2.46.0 is already installed at `/opt/homebrew/bin/xcodegen` and accepts `deploymentTarget.macOS: "26.0"`.
+APPLIES_TO: Task 1.
+
+KEY_INSIGHT: The unit-test target MUST have `GENERATE_INFOPLIST_FILE: YES`, otherwise `xcodebuild test` fails with `Cannot code sign because the target does not have an Info.plist file`.
+APPLIES_TO: Task 2 (`project.yml`).
+
+KEY_INSIGHT: `Label("25:00", systemImage: "timer")` in the menu bar shows ONLY the icon (accessibility name became "Timer", text was dropped). `HStack { Image(systemName:); Text() }` shows both (accessibility name "25:00", width 75pt).
+APPLIES_TO: Task 3 (`SliceApp.swift`). Use the HStack.
+
+KEY_INSIGHT: `AppIcon.appiconset/Contents.json` with a `"platform": "macOS"` key triggers `warning: Unknown platform value "macOS"`. The two-entry `512x512` 1x/2x form below builds with zero warnings.
+APPLIES_TO: Task 5.
+
+KEY_INSIGHT: `xcodebuild test` prints `Executed 0 tests` (that is the XCTest counter). The Swift Testing result is the line `✔ Test run with 1 test in 1 suite passed`. Grep for that.
+APPLIES_TO: Validation.
+
+KEY_INSIGHT: On this Mac the right side of the menu bar is full (13 items), so macOS parks the new Slice item at x≈702, which is under the notch and invisible. Accessibility still sees it. Verify presence with the `osascript` command in Manual Validation, not by eye. To see it, Cmd-drag it right or quit another menu bar app.
+APPLIES_TO: Manual Validation.
+
+KEY_INSIGHT: On launch the app logs `connection to service named com.apple.linkd.autoShortcut` errors to the console. Harmless macOS noise for apps without App Intents. Ignore.
+APPLIES_TO: Manual Validation.
+
+---
+
+## Patterns to Mirror
+
+No existing Swift code. These patterns are *established* by this phase; later phases follow them.
+
+### NAMING_CONVENTION
+```
+project.yml                 ← XcodeGen spec, source of truth for project settings
+Slice.xcodeproj/            ← generated by `xcodegen generate`, committed
+Slice/                      ← app target, one type per file
+  SliceApp.swift            ← @main App, scenes only
+  MenuBarView.swift         ← content of the MenuBarExtra panel
+  Info.plist                ← generated by XcodeGen, committed, never hand-edited
+  Resources/Assets.xcassets ← AppIcon (Phase 6 fills it)
+SliceTests/
+  SliceTests.swift          ← Swift Testing
+README.md
+```
+Types `PascalCase`; file named after the one type it holds; views end in `View`.
+
+### COMMENT_STYLE
+```swift
+// Explain WHY, and introduce a Swift/SwiftUI concept the first time it appears.
+// Do not narrate WHAT obvious code does.
+// `///` doc comment on every type. `//` inside bodies. 1–3 lines each.
+```
+
+### ERROR_HANDLING
+Phase 1 has no failure paths. Rule for later: no `try!`, no `fatalError`; user-facing failures shown as a short `Text` in the panel.
+
+### LOGGING_PATTERN
+None in Phase 1. Later: `import os`, `Logger(subsystem: "com.rezaahmadn.Slice", category: "<TypeName>")`. No `print`.
+
+### TEST_STRUCTURE
+See Task 6 — that file is the template.
+
+---
+
+## Files to Change
+
+| File | Action | Justification |
+|---|---|---|
+| `project.yml` | CREATE | XcodeGen spec |
+| `Slice/SliceApp.swift` | CREATE | `@main`, `MenuBarExtra` |
+| `Slice/MenuBarView.swift` | CREATE | Panel placeholder + Quit |
+| `Slice/Resources/Assets.xcassets/Contents.json` | CREATE | Catalog root |
+| `Slice/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json` | CREATE | Empty icon set, zero warnings |
+| `SliceTests/SliceTests.swift` | CREATE | Placeholder Swift Testing test |
+| `README.md` | CREATE | Build instructions |
+| `Slice.xcodeproj/` | GENERATE | `xcodegen generate` output, committed |
+| `Slice/Info.plist` | GENERATE | `xcodegen generate` output, committed |
+
+## NOT Building
+- Timer logic (Phase 2), real UI (Phase 3), notifications (4), settings/launch-at-login (5), icon artwork (6), CI/release (7)
+- Developer ID / notarization
+- `Package.swift`
+
+---
+
+## Step-by-Step Tasks
+
+All commands run from the repo root `/Users/reza/Slice`.
+
+### Task 1: Confirm XcodeGen
+- **ACTION**: Run `xcodegen --version`.
+- **IMPLEMENT**: Nothing. Already installed (2.46.0).
+- **VALIDATE**: Output is `Version: 2.46.0` or newer. If the command is missing, run `brew install xcodegen`.
+
+### Task 2: Create `project.yml`
+- **ACTION**: Create the file at repo root with EXACTLY this content.
+- **IMPLEMENT**:
+```yaml
+name: Slice
+options:
+  bundleIdPrefix: com.rezaahmadn
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    # Ad-hoc signing: runs on this Mac without an Apple Developer account.
+    # Swap to Developer ID later by changing only these three lines.
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEVELOPMENT_TEAM: ""
+    ENABLE_HARDENED_RUNTIME: NO
+
+targets:
+  Slice:
+    type: application
+    platform: macOS
+    sources:
+      - path: Slice
+    info:
+      path: Slice/Info.plist
+      properties:
+        CFBundleDisplayName: Slice
+        CFBundleName: Slice
+        # Menu-bar-only app: no Dock icon, no app menu.
+        LSUIElement: true
+        NSHumanReadableCopyright: "MIT License"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rezaahmadn.Slice
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_STRICT_CONCURRENCY: complete
+
+  SliceTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - path: SliceTests
+    dependencies:
+      - target: Slice
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.rezaahmadn.SliceTests
+        # Test bundles need an Info.plist too; let Xcode generate it.
+        GENERATE_INFOPLIST_FILE: YES
+
+schemes:
+  Slice:
+    build:
+      targets:
+        Slice: all
+        SliceTests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - SliceTests
+```
+- **GOTCHA**: Do not create `Slice/Info.plist` by hand; XcodeGen writes it. Do not remove `GENERATE_INFOPLIST_FILE: YES` from the test target.
+- **VALIDATE**: File exists; Task 8 generate succeeds.
+
+### Task 3: Create `Slice/SliceApp.swift`
+- **ACTION**: Create directory `Slice/` and the file with EXACTLY this content.
+- **IMPLEMENT**:
+```swift
+import SwiftUI
+
+/// The app's entry point. SwiftUI creates exactly one `SliceApp` and asks it for scenes.
+/// Slice has no regular window — its only scene is the menu bar item.
+@main
+struct SliceApp: App {
+    var body: some Scene {
+        // `MenuBarExtra` puts an item in the macOS menu bar (macOS 13+).
+        // The `label` closure is what you see in the bar; the main closure is the
+        // content that opens when you click it. "25:00" is hardcoded for now —
+        // Phase 2 binds it to the timer.
+        MenuBarExtra {
+            MenuBarView()
+        } label: {
+            // An `HStack` of image + text shows both in the menu bar.
+            // (`Label` would show only the icon here.)
+            HStack(spacing: 4) {
+                Image(systemName: "timer")
+                Text("25:00")
+            }
+        }
+        // `.window` shows a small panel (like a popover) instead of a drop-down
+        // menu, so we can put real SwiftUI controls in it later.
+        .menuBarExtraStyle(.window)
+    }
+}
+```
+- **GOTCHA**: No `WindowGroup` — that would open an empty window at launch. Do not use `Label` for the menu bar label.
+- **VALIDATE**: Compiles in Task 8.
+
+### Task 4: Create `Slice/MenuBarView.swift`
+- **ACTION**: Create the file with EXACTLY this content.
+- **IMPLEMENT**:
+```swift
+import SwiftUI
+
+/// Content of the panel that opens when you click the menu bar item.
+/// Phase 3 replaces the placeholder with the real timer controls.
+struct MenuBarView: View {
+    var body: some View {
+        VStack(spacing: 12) {
+            Text("Slice")
+                .font(.headline)
+            Text("Timer coming soon.")
+                .foregroundStyle(.secondary)
+            Divider()
+            // Menu-bar-only apps have no Dock icon or app menu, so users need an
+            // explicit way to quit. `NSApplication` is AppKit's app object; SwiftUI
+            // re-exports AppKit on macOS so no extra import is needed.
+            Button("Quit Slice") {
+                NSApplication.shared.terminate(nil)
+            }
+            .keyboardShortcut("q")
+        }
+        .padding(16)
+        .frame(width: 200)
+    }
+}
+
+#Preview {
+    MenuBarView()
+}
+```
+- **VALIDATE**: Compiles in Task 8; panel shows in Manual Validation.
+
+### Task 5: Create the asset catalog
+- **ACTION**: Create directory `Slice/Resources/Assets.xcassets/AppIcon.appiconset/` and two files.
+- **IMPLEMENT**: `Slice/Resources/Assets.xcassets/Contents.json`:
+```json
+{
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+```
+`Slice/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json`:
+```json
+{
+  "images" : [
+    {
+      "idiom" : "mac",
+      "scale" : "1x",
+      "size" : "512x512"
+    },
+    {
+      "idiom" : "mac",
+      "scale" : "2x",
+      "size" : "512x512"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
+```
+- **GOTCHA**: Do not add a `"platform"` key. Do not add `"filename"` entries yet (no images exist until Phase 6).
+- **VALIDATE**: Build in Task 8 prints zero `warning:` lines about AppIcon.
+
+### Task 6: Create `SliceTests/SliceTests.swift`
+- **ACTION**: Create directory `SliceTests/` and the file with EXACTLY this content.
+- **IMPLEMENT**:
+```swift
+import Testing
+@testable import Slice
+
+/// Smoke test proving the test target builds and links against the app.
+/// Phase 2 adds real tests for `PomodoroTimer` in their own file.
+struct SliceTests {
+    @Test func placeholder() {
+        #expect(true)
+    }
+}
+```
+- **VALIDATE**: `✔ Test run with 1 test in 1 suite passed` in Task 8.
+
+### Task 7: Create `README.md`
+- **ACTION**: Create the file with EXACTLY this content.
+- **IMPLEMENT**:
+````markdown
+# Slice
+
+Minimal Pomodoro timer for the macOS menu bar. Nothing else.
+
+**Status:** work in progress — Phase 1 of 7 (project skeleton). The menu bar shows a static `25:00`; the timer itself is next.
+
+## Build from source
+
+Requires macOS 26 and Xcode 26.
+
+```sh
+git clone https://github.com/rezaahmadn/Slice.git
+cd Slice
+open Slice.xcodeproj   # then press Cmd+R
+```
+
+Or from the terminal:
+
+```sh
+xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug build
+```
+
+The build is ad-hoc signed, so it runs on the Mac that built it with no Apple Developer account.
+
+## Download a build
+
+Coming in Phase 7. Downloaded builds will be ad-hoc signed, so macOS will ask you to right-click → Open the first time.
+
+## Project layout
+
+`Slice.xcodeproj` is generated from `project.yml` by [XcodeGen](https://github.com/yonaskolb/XcodeGen) and committed, so you only need XcodeGen if you change `project.yml`:
+
+```sh
+brew install xcodegen
+xcodegen generate
+```
+
+## Non-goals
+
+Slice will not get task lists, statistics, sync, accounts, an iOS app, a Windows/Linux port, or an App Store release. It is one timer in the menu bar.
+
+## License
+
+MIT (license file arrives with the first release).
+````
+- **VALIDATE**: File exists.
+
+### Task 8: Generate, build, test, launch, commit, push
+- **ACTION**: Run the Validation Commands below in order, then commit and push.
+- **IMPLEMENT** (commit + push, after all validation passes):
+```sh
+git add -A
+git commit -m "feat: project skeleton with static MenuBarExtra
+
+Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
+git push
+```
+- **GOTCHA**: `Slice.xcodeproj/xcuserdata/` is git-ignored; the rest of `Slice.xcodeproj/` and `Slice/Info.plist` ARE committed on purpose so cloners do not need XcodeGen.
+- **VALIDATE**: `git status --short` prints nothing. `git ls-files | grep -c -E "project.pbxproj|Slice/Info.plist"` prints `2`.
+
+---
+
+## Testing Strategy
+
+### Unit Tests
+| Test | Input | Expected Output | Edge Case? |
+|---|---|---|---|
+| `placeholder` | none | passes | No — proves `@testable import Slice` links |
+
+### Edge Cases Checklist
+- [x] All N/A this phase (no input, no state, no network)
+
+---
+
+## Validation Commands
+
+Run from `/Users/reza/Slice`, in this order. Each EXPECT is the exact string to look for.
+
+### 1. Generate
+```sh
+xcodegen generate
+```
+EXPECT: last line `Created project at /Users/reza/Slice/Slice.xcodeproj`. Also `Slice/Info.plist` now exists.
+
+### 2. Build
+```sh
+xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug build 2>&1 | grep -E "error:|warning:|BUILD" | grep -v appintentsmetadataprocessor
+```
+EXPECT: exactly one line: `** BUILD SUCCEEDED **`. No `error:` lines, no `warning:` lines.
+
+### 3. Test
+```sh
+xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug test 2>&1 | grep -E "error:|Test run with|TEST (SUCCEEDED|FAILED)"
+```
+EXPECT: contains `✔ Test run with 1 test in 1 suite passed` and `** TEST SUCCEEDED **`. Ignore `Executed 0 tests` if it appears — that is the XCTest counter.
+
+### 4. Bundle checks
+```sh
+APP="$(xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug -showBuildSettings 2>/dev/null | awk '/ BUILT_PRODUCTS_DIR =/{print $3}')/Slice.app"
+/usr/libexec/PlistBuddy -c "Print :LSUIElement" "$APP/Contents/Info.plist"
+codesign -dv "$APP" 2>&1 | grep -E "^Identifier=|^Signature="
+```
+EXPECT: `true`, then `Identifier=com.rezaahmadn.Slice`, then `Signature=adhoc`.
+
+### 5. Launch and probe (Manual Validation, scripted)
+```sh
+open "$APP"; sleep 4
+pgrep -x Slice
+osascript -e 'tell application "System Events" to tell process "Slice" to get {name, size} of every menu bar item of menu bar 2'
+osascript -e 'tell application "System Events" to tell process "Slice" to click menu bar item 1 of menu bar 2'
+sleep 1
+screencapture -x -R 0,0,1512,220 /tmp/slice-check.png
+```
+EXPECT: a PID; then `25:00, 75, 24`; then the click command echoes `menu bar item 25:00 of menu bar 2 of application process Slice`. Open `/tmp/slice-check.png` (Read tool) and confirm a panel reading "Slice / Timer coming soon." with a "Quit Slice" button is visible near the top of the screen. The `25:00` text itself may be invisible under the notch on this Mac — that is expected; the osascript output is the proof.
+
+Console noise `connection to service named com.apple.linkd.autoShortcut` is harmless.
+
+### 6. Quit
+```sh
+pkill -x Slice; sleep 1; pgrep -x Slice || echo "quit ok"
+```
+EXPECT: `quit ok`.
+
+### 7. Fresh-clone build (after push)
+```sh
+rm -rf /tmp/slice-clone && git clone --quiet https://github.com/rezaahmadn/Slice.git /tmp/slice-clone && cd /tmp/slice-clone && xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug build 2>&1 | grep -E "error:|BUILD"; cd /Users/reza/Slice
+```
+EXPECT: `** BUILD SUCCEEDED **` without running XcodeGen.
+
+---
+
+## Acceptance Criteria
+- [ ] Tasks 1–8 done
+- [ ] Validation 1–7 all match EXPECT
+- [ ] Commit pushed to `origin/main`
+
+## Completion Checklist
+- [ ] Files match the plan byte-for-byte (apart from trailing newline)
+- [ ] No `print`, `try!`, `fatalError`
+- [ ] `README.md` Status line says Phase 1
+- [ ] Nothing from Phases 2–7 added
+- [ ] PRD `.claude/PRPs/prds/slice.prd.md` Phase 1 row status changed from `in-progress` to `complete`
+
+## Risks
+| Risk | Likelihood | Impact | Mitigation |
+|---|---|---|---|
+| Menu bar item invisible under notch | Certain on this Mac | Cosmetic | Proven by osascript; Cmd-drag item to reposition |
+| Everything else | Verified in dry run | — | Follow the plan exactly |
+
+## Notes
+- Bundle ID `com.rezaahmadn.Slice` must never change after Phase 4 (`SMAppService` and notification permissions key on it).
+- Dry-run artifacts live in the session scratchpad (`slice-dry/`), not in the repo.
+- Overall phase order stays 1 → 2 → 3 → 4 → 6 → 5 → 7.
