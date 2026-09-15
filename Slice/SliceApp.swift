@@ -38,7 +38,9 @@ struct SliceApp: App {
             // (`Label` would show only the icon here.) Reading `timer.displayText`
             // here is enough: SwiftUI re-renders the label whenever it changes.
             HStack(spacing: 4) {
-                Image(systemName: "timer")
+                // Our own icon from the asset catalog. It is marked "template" there,
+                // so macOS recolors it to match the menu bar in light and dark mode.
+                Image("MenuBarIcon")
                 Text(timer.displayText)
                     .monospacedDigit()
             }

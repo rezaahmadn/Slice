@@ -2,7 +2,7 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-**Status:** work in progress — Phase 4 of 7 (notifications). Timer works and notifies with a banner and sound when a phase ends. Settings, icon and a downloadable release are next.
+**Status:** work in progress — Phase 6 of 7 (custom icon). Timer, notifications and icon are done; settings and a downloadable release are next.
 
 ## Build from source
 
@@ -34,6 +34,16 @@ Coming in Phase 7. Downloaded builds will be ad-hoc signed, so macOS will ask yo
 brew install xcodegen
 xcodegen generate
 ```
+
+## Icons
+
+Icons are SVGs in `Design/`, rendered to the PNGs in the asset catalog by `Scripts/render-icon.swift` (AppKit, no extra tools). After editing an SVG:
+
+```sh
+swift Scripts/render-icon.swift Design/AppIcon.svg Slice/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png 1024
+```
+
+and the same for the other three sizes listed in the Phase 6 plan.
 
 ## Non-goals
 

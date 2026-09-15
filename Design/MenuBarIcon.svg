@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 1024 1024">
+  <!-- monochrome template image: black + alpha; macOS tints it for light/dark menu bars -->
+  <!-- ring (outer r=400, inner r=250) with a 60° wedge removed between 12 and 2 o'clock -->
+  <path fill="#000"
+        d="M858 312 A400 400 0 1 1 512 112 L512 262 A250 250 0 1 0 728 387 Z"/>
+  <path fill="#000" transform="translate(50,-86)"
+        d="M512 112 A400 400 0 0 1 858 312 L728 387 A250 250 0 0 0 512 262 Z"/>
+</svg>

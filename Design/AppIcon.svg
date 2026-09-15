@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0524F"/>
+      <stop offset="1" stop-color="#C62828"/>
+    </linearGradient>
+  </defs>
+  <!-- macOS squircle: 824px artwork centered on a 1024 canvas -->
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)"/>
+  <!-- ring (outer r=280, inner r=170) with a 45° wedge removed between 12 and 1:30 o'clock -->
+  <path fill="#FFF7F2"
+        d="M710 314 A280 280 0 1 1 512 232 L512 342 A170 170 0 1 0 632 392 Z"/>
+  <!-- the removed wedge, pushed outward along the gap's bisector so it reads as a cut slice -->
+  <path fill="#FFF7F2" transform="translate(26,-62)"
+        d="M512 232 A280 280 0 0 1 710 314 L632 392 A170 170 0 0 0 512 342 Z"/>
+</svg>
