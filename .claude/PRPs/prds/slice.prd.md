@@ -144,8 +144,8 @@ Menu bar shows `25:00`. Click: popover with Start/Pause/Reset, phase name, gear 
 | 2 | Timer core | `PomodoroTimer` model: phases, start/pause/reset, end-date ticking, auto-switch | complete | - | 1 | [plan](../plans/phase-2-timer-core.plan.md) |
 | 3 | Menu bar UI | Live countdown in menu bar, popover with controls and phase label | complete | with 4 | 2 | [plan](../plans/phase-3-menu-bar-ui.plan.md) |
 | 4 | Notifications | Permission request, banner + sound on transitions | complete | with 3 | 2 | [plan](../plans/phase-4-notifications.plan.md) |
-| 5 | Settings | Custom durations, launch at login, persisted | pending | with 6 | 3 | - |
-| 6 | Custom icon | App icon set + monochrome menu bar template image | in-progress | with 5 | 1 | [plan](../plans/phase-6-custom-icon.plan.md) |
+| 5 | Settings | Custom durations, launch at login, persisted | in-progress | with 6 | 3 | [plan](../plans/phase-5-settings.plan.md) |
+| 6 | Custom icon | App icon set + monochrome menu bar template image | complete | with 5 | 1 | [plan](../plans/phase-6-custom-icon.plan.md) |
 | 7 | Public release | README (build, right-click-Open, non-goals), LICENSE, GitHub Actions unsigned build on tag | pending | - | 5, 6 | - |
 
 ### Phase Details
