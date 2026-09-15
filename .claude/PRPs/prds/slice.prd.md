@@ -146,7 +146,7 @@ Menu bar shows `25:00`. Click: popover with Start/Pause/Reset, phase name, gear 
 | 4 | Notifications | Permission request, banner + sound on transitions | complete | with 3 | 2 | [plan](../plans/phase-4-notifications.plan.md) |
 | 5 | Settings | Custom durations, launch at login, persisted | complete | with 6 | 3 | [plan](../plans/phase-5-settings.plan.md) |
 | 6 | Custom icon | App icon set + monochrome menu bar template image | complete | with 5 | 1 | [plan](../plans/phase-6-custom-icon.plan.md) |
-| 7 | Public release | README (build, right-click-Open, non-goals), LICENSE, GitHub Actions unsigned build on tag | in-progress | - | 5, 6 | [plan](../plans/phase-7-public-release.plan.md) |
+| 7 | Public release | README (build, right-click-Open, non-goals), LICENSE, GitHub Actions unsigned build on tag | complete | - | 5, 6 | [plan](../plans/phase-7-public-release.plan.md) |
 
 ### Phase Details
 
@@ -223,4 +223,4 @@ Sources: https://help.apple.com/xcode/mac/current/en.lproj/dev033e997ca.html , h
 ---
 
 *Generated: 2026-09-15*
-*Status: DRAFT - needs validation*
+*Status: v0.1.0 shipped 2026-09-15 — all 7 phases complete. Open: 30-day daily-use hypothesis; Developer ID signing when an account exists.*
