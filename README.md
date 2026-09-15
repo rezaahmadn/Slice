@@ -6,6 +6,12 @@ A ring in the menu bar, a countdown next to it, Start / Pause / Reset in a small
 
 Requires macOS 26.
 
+<p><img src="Design/screenshots/menubar.png" width="300" alt="Slice in the menu bar: ring icon and 24:44"></p>
+<p>
+  <img src="Design/screenshots/panel.png" width="280" alt="Slice panel: Work, 24:44, Pause, Reset, gear, Quit Slice">
+  <img src="Design/screenshots/panel-settings.png" width="280" alt="Slice panel with settings unfolded: work minutes, break minutes, launch at login">
+</p>
+
 ## Download
 
 Grab `Slice-<version>.zip` from the [latest release](https://github.com/rezaahmadn/Slice/releases/latest), unzip, and move `Slice.app` to `/Applications`.
