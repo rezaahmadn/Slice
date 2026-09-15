@@ -42,6 +42,8 @@ We'll know we're right when Reza uses it for every work/study session for 30 con
 
 ## Open Questions
 
+Live backlog and hand-off notes: [`TODO.md`](../../../TODO.md) at the repo root.
+
 - [ ] Notification style — **default: system banner via UserNotifications**. Full-screen break overlay only if banners prove too easy to ignore.
 - [ ] Menu bar display when idle — **default: countdown always visible** (e.g. `25:00` when idle, `24:59` running). Icon-only mode later if it feels noisy.
 - [ ] Keep screen awake during work phase — **default: no**. Add `IOPMAssertion` later if display sleep interrupts sessions.

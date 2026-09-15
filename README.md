@@ -66,6 +66,10 @@ git push origin v0.2.0
 
 The version inside the app comes from the tag.
 
+## Roadmap
+
+What's left, and how to pick it up: [TODO.md](TODO.md).
+
 ## Non-goals
 
 Slice will not get task lists, statistics, sync, accounts, an iOS app, a Windows/Linux port, or an App Store release. It is one timer in the menu bar.
