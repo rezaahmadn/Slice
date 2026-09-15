@@ -1,11 +1,15 @@
 import SwiftUI
 
 /// Content of the panel that opens when you click the menu bar item:
-/// current phase, big countdown, and the three controls.
+/// current phase, big countdown, the controls, and (behind the gear) settings.
 struct MenuBarView: View {
     /// A plain `let` is enough for an `@Observable` class: SwiftUI tracks which
     /// properties `body` reads and re-renders when they change.
     let timer: PomodoroTimer
+
+    /// `@State` is view-local storage that survives re-renders. Whether the
+    /// settings section is unfolded.
+    @State private var showSettings = false
 
     var body: some View {
         VStack(spacing: 12) {
@@ -36,6 +40,18 @@ struct MenuBarView: View {
                     timer.reset()
                 }
                 .disabled(timer.state == .idle)
+
+                Button {
+                    showSettings.toggle()
+                } label: {
+                    Image(systemName: "gearshape")
+                }
+                .help("Settings")
+            }
+
+            if showSettings {
+                Divider()
+                SettingsView(timer: timer)
             }
 
             Divider()
@@ -49,7 +65,7 @@ struct MenuBarView: View {
             .keyboardShortcut("q")
         }
         .padding(16)
-        .frame(width: 220)
+        .frame(width: 240)
     }
 }
 

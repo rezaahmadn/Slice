@@ -101,4 +101,12 @@ struct PomodoroTimerTests {
         timer.tick(now: t0.addingTimeInterval(4))
         #expect(timer.remaining == 6)
     }
+
+    @Test func newWorkDurationShowsAfterResetWhileIdle() {
+        let timer = PomodoroTimer(workDuration: 10, breakDuration: 4)
+        timer.workDuration = 20   // what SettingsView does when the stepper moves
+        timer.reset()
+        #expect(timer.remaining == 20)
+        #expect(timer.displayText == "00:20")
+    }
 }

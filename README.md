@@ -2,7 +2,7 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-**Status:** work in progress — Phase 6 of 7 (custom icon). Timer, notifications and icon are done; settings and a downloadable release are next.
+**Status:** work in progress — Phase 5 of 7 (settings). Timer, notifications, icon and settings are done; a downloadable release is next.
 
 ## Build from source
 

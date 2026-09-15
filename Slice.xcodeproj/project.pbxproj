@@ -13,6 +13,7 @@
 		325B26F7A56BD092633D8DCD /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */; };
 		3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20DC89A0CC4D9918729949 /* MenuBarView.swift */; };
 		42C2DBE678C0186CB0699C50 /* SliceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5F55D50528A5A10EB3BEE /* SliceApp.swift */; };
+		5EDCC4C2DE7F783D7C6469AD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B841D10A2D18E0BF498FB0 /* SettingsView.swift */; };
 		73D020E368739BCADDA8C831 /* SliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */; };
 		EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F497FC8CD088E3CDE8F7EE /* Notifications.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		4109E3BE24B14E602030970D /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		410D313DA205222E05318D9D /* SliceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CD15552C07A47D2D8E1D2C /* Slice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A8B841D10A2D18E0BF498FB0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliceTests.swift; sourceTree = "<group>"; };
 		EC20DC89A0CC4D9918729949 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -59,6 +61,7 @@
 				EC20DC89A0CC4D9918729949 /* MenuBarView.swift */,
 				13F497FC8CD088E3CDE8F7EE /* Notifications.swift */,
 				4109E3BE24B14E602030970D /* PomodoroTimer.swift */,
+				A8B841D10A2D18E0BF498FB0 /* SettingsView.swift */,
 				01F5F55D50528A5A10EB3BEE /* SliceApp.swift */,
 				81429C9705D6D47A9055149E /* Resources */,
 			);
@@ -188,6 +191,7 @@
 				3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */,
 				EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */,
 				109AB33CA097AB6A95C5A641 /* PomodoroTimer.swift in Sources */,
+				5EDCC4C2DE7F783D7C6469AD /* SettingsView.swift in Sources */,
 				42C2DBE678C0186CB0699C50 /* SliceApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
