@@ -146,7 +146,8 @@ Menu bar shows `25:00`. Click: popover with Start/Pause/Reset, phase name, gear 
 | 4 | Notifications | Permission request, banner + sound on transitions | complete | with 3 | 2 | [plan](../plans/phase-4-notifications.plan.md) |
 | 5 | Settings | Custom durations, launch at login, persisted | complete | with 6 | 3 | [plan](../plans/phase-5-settings.plan.md) |
 | 6 | Custom icon | App icon set + monochrome menu bar template image | complete | with 5 | 1 | [plan](../plans/phase-6-custom-icon.plan.md) |
-| 7 | Public release | README (build, right-click-Open, non-goals), LICENSE, GitHub Actions unsigned build on tag | complete | - | 5, 6 | [plan](../plans/phase-7-public-release.plan.md) |
+| 7 | Public release | README (build, Gatekeeper "Open Anyway", non-goals), LICENSE, GitHub Actions unsigned build on tag | complete | - | 5, 6 | [plan](../plans/phase-7-public-release.plan.md) |
+| 8 | Polish | README screenshots, GitHub Actions bumped to Node 24 majors, v0.1.1 | in-progress | - | 7 | [plan](../plans/phase-8-polish.plan.md) |
 
 ### Phase Details
 
