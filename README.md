@@ -2,11 +2,24 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-**Status:** work in progress — Phase 5 of 7 (settings). Timer, notifications, icon and settings are done; a downloadable release is next.
+A ring in the menu bar, a countdown next to it, Start / Pause / Reset in a small panel, a banner and a sound when work or break ends. Work and break lengths are configurable; it can launch at login. No task list, no stats, no sync, no account, no network.
+
+Requires macOS 26.
+
+## Download
+
+Grab `Slice-<version>.zip` from the [latest release](https://github.com/rezaahmadn/Slice/releases/latest), unzip, and move `Slice.app` to `/Applications`.
+
+The app is ad-hoc signed (no Apple Developer account), so the first launch is blocked by Gatekeeper. Either:
+
+1. Try to open it once, then go to **System Settings → Privacy & Security**, scroll down, and click **Open Anyway**; or
+2. In Terminal: `xattr -d com.apple.quarantine /Applications/Slice.app`
+
+After that it opens normally.
 
 ## Build from source
 
-Requires macOS 26 and Xcode 26.
+Requires Xcode 26.
 
 ```sh
 git clone https://github.com/rezaahmadn/Slice.git
@@ -20,30 +33,32 @@ Or from the terminal:
 xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Debug build
 ```
 
-The build is ad-hoc signed, so it runs on the Mac that built it with no Apple Developer account.
+Builds you make yourself are not quarantined, so they open directly.
 
-## Download a build
+## Using it
 
-Coming in Phase 7. Downloaded builds will be ad-hoc signed, so macOS will ask you to right-click → Open the first time.
+- Click the ring in the menu bar to open the panel.
+- **Start** begins a work session; the same button becomes **Pause**. **Reset** returns to an idle work session.
+- Work ends → break starts by itself and a banner says so. Break ends → back to idle; starting the next session is up to you.
+- The gear unfolds settings: work minutes, break minutes, launch at login.
+- Cmd+Q in the panel quits.
 
 ## Project layout
 
-`Slice.xcodeproj` is generated from `project.yml` by [XcodeGen](https://github.com/yonaskolb/XcodeGen) and committed, so you only need XcodeGen if you change `project.yml`:
+- `Slice/` — the app, one type per file: `SliceApp` (entry), `PomodoroTimer` (state machine), `MenuBarView`, `SettingsView`, `Notifications`.
+- `SliceTests/` — Swift Testing suites; the timer is driven with synthetic dates so tests never wait.
+- `Design/` — SVG icon sources. `Scripts/render-icon.swift` turns them into the PNGs in the asset catalog.
+- `project.yml` — [XcodeGen](https://github.com/yonaskolb/XcodeGen) spec. `Slice.xcodeproj` is generated from it and committed, so you only need XcodeGen if you edit `project.yml` (`brew install xcodegen && xcodegen generate`).
+- `.github/workflows/release.yml` — on a `v*` tag, builds a Release `Slice.app` on a macOS 26 runner and attaches it as a zip to a GitHub Release.
+
+## Releasing
 
 ```sh
-brew install xcodegen
-xcodegen generate
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
-## Icons
-
-Icons are SVGs in `Design/`, rendered to the PNGs in the asset catalog by `Scripts/render-icon.swift` (AppKit, no extra tools). After editing an SVG:
-
-```sh
-swift Scripts/render-icon.swift Design/AppIcon.svg Slice/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png 1024
-```
-
-and the same for the other three sizes listed in the Phase 6 plan.
+The version inside the app comes from the tag.
 
 ## Non-goals
 
@@ -51,4 +66,4 @@ Slice will not get task lists, statistics, sync, accounts, an iOS app, a Windows
 
 ## License
 
-MIT (license file arrives with the first release).
+[MIT](LICENSE)

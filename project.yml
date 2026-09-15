@@ -29,6 +29,9 @@ targets:
       properties:
         CFBundleDisplayName: Slice
         CFBundleName: Slice
+        # Take the version from build settings so CI can inject it from the git tag.
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         # Menu-bar-only app: no Dock icon, no app menu.
         LSUIElement: true
         NSHumanReadableCopyright: "MIT License"

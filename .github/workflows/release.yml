@@ -1,0 +1,44 @@
+# Builds an ad-hoc signed Slice.app on every v* tag and attaches it to a GitHub Release.
+# No Apple Developer account involved: downloaders must allow the app once in
+# System Settings → Privacy & Security (see README).
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write   # needed to create the release and upload the zip
+
+jobs:
+  build:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Show Xcode
+        run: xcodebuild -version
+
+      - name: Build (Release, ad-hoc signed)
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          VERSION="${TAG#v}"
+          xcodebuild -project Slice.xcodeproj -scheme Slice -configuration Release \
+            -derivedDataPath build \
+            CODE_SIGN_IDENTITY=- CODE_SIGNING_ALLOWED=YES \
+            MARKETING_VERSION="$VERSION" CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+            build
+
+      - name: Zip
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          ditto -c -k --keepParent build/Build/Products/Release/Slice.app "Slice-${TAG#v}.zip"
+          ls -la Slice-*.zip
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: Slice-*.zip
+          generate_release_notes: true
