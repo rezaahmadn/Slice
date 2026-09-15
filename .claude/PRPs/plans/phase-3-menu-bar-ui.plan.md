@@ -3,7 +3,7 @@
 ## Summary
 Bind the menu bar label to the live `PomodoroTimer` and replace the placeholder panel with real controls: phase name, big countdown, Start/Pause toggle, Reset, Quit. After this phase Slice is a working Pomodoro timer (no notifications yet).
 
-**Both files below were dry-run on this machine on 2026-09-15 on top of Phases 1–2: build succeeded with zero warnings, 10 tests passed, and the scripted UI check read `24:58` from the menu bar 2.5 s after clicking Start, then `25:00` after Reset.** Copy them exactly.
+**Both files below were dry-run on this machine on 2026-09-15 on top of Phases 1–2: build succeeded with zero warnings, 10 tests passed, and the Validation 4 script (as now written) returned `25:00, Work, 25:00, 24:58, 25:00`.** Copy them exactly.
 
 ## User Story
 As Reza, I want to start, pause and reset the timer from the menu bar and see the countdown there, so that I can commit to a work window without opening any window.
@@ -286,7 +286,7 @@ pkill -x Slice; sleep 1; open "$APP"; sleep 4
 osascript <<'APPLESCRIPT'
 tell application "System Events"
   tell process "Slice"
-    set before to name of menu bar item 1 of menu bar 2
+    set beforeLabel to name of menu bar item 1 of menu bar 2
     click menu bar item 1 of menu bar 2
     delay 1
     if (count windows) = 0 then
@@ -296,11 +296,11 @@ tell application "System Events"
     set texts to name of every static text of group 1 of window 1
     click button 1 of group 1 of window 1
     delay 2.5
-    set running to name of menu bar item 1 of menu bar 2
+    set runningLabel to name of menu bar item 1 of menu bar 2
     click button 2 of group 1 of window 1
     delay 0.5
     set afterReset to name of menu bar item 1 of menu bar 2
-    return {before, texts, running, afterReset}
+    return {beforeLabel, texts, runningLabel, afterReset}
   end tell
 end tell
 APPLESCRIPT
