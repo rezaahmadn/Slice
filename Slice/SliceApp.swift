@@ -18,9 +18,13 @@ struct SliceApp: App {
             workDuration: TimeInterval(workMinutes * 60),
             breakDuration: TimeInterval(breakMinutes * 60)
         )
-        // Wire the model's completion hook to notifications once, at launch.
+        // Wire the model's completion hook once, at launch. The alert style is
+        // re-read every time so a change in Settings applies without a relaunch.
         timer.onPhaseCompleted = { finished in
             Notifications.post(for: finished)
+            if AlertStyle.load() == .alarm {
+                Alarm.show(for: finished)
+            }
         }
         // `_timer` is the `State` wrapper itself; this is how you seed `@State`
         // from an initializer.

@@ -11,6 +11,8 @@ struct SettingsView: View {
     /// `SliceApp.init()` reads at launch.
     @AppStorage("workMinutes") private var workMinutes = 25
     @AppStorage("breakMinutes") private var breakMinutes = 5
+    /// Stored as the enum's raw string so `@AppStorage` can hold it.
+    @AppStorage(AlertStyle.defaultsKey) private var alertStyle = AlertStyle.banner.rawValue
 
     /// `SMAppService.mainApp` is macOS's launch-at-login registry for this app
     /// (macOS 13+). Its `status` is the source of truth; we mirror it in state.
@@ -22,6 +24,13 @@ struct SettingsView: View {
             Stepper("Work: \(workMinutes) min", value: $workMinutes, in: 1...120)
             Stepper("Break: \(breakMinutes) min", value: $breakMinutes, in: 1...60)
             Toggle("Launch at login", isOn: $launchAtLogin)
+            // Banner = one notification. Alarm = banner + floating window + looping
+            // sound until you click Dismiss.
+            Picker("Alert", selection: $alertStyle) {
+                Text("Banner").tag(AlertStyle.banner.rawValue)
+                Text("Alarm").tag(AlertStyle.alarm.rawValue)
+            }
+            .pickerStyle(.segmented)
             if let launchError {
                 Text(launchError)
                     .font(.caption)

@@ -12,9 +12,13 @@
 		2F49EB11660DDEB0B00AB719 /* PomodoroTimerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */; };
 		325B26F7A56BD092633D8DCD /* NotificationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */; };
 		3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC20DC89A0CC4D9918729949 /* MenuBarView.swift */; };
+		3F0EF8CBB7D0D4B2D5AA70FB /* AlertStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3EEA2DD89E4095DAA70B213 /* AlertStyle.swift */; };
 		42C2DBE678C0186CB0699C50 /* SliceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F5F55D50528A5A10EB3BEE /* SliceApp.swift */; };
 		5EDCC4C2DE7F783D7C6469AD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8B841D10A2D18E0BF498FB0 /* SettingsView.swift */; };
 		73D020E368739BCADDA8C831 /* SliceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */; };
+		8AF32BA9DB554096286FC0C9 /* AlertStyleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D35218C5864E80513450281 /* AlertStyleTests.swift */; };
+		95A42E3210A446420A7BBAFE /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD9A6B8866CA154990ADC4E /* AlarmView.swift */; };
+		9AA838CBB62ED978A477096E /* Alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D6C0435CAF1D3B75D3BC2E1 /* Alarm.swift */; };
 		EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F497FC8CD088E3CDE8F7EE /* Notifications.swift */; };
 /* End PBXBuildFile section */
 
@@ -31,6 +35,7 @@
 /* Begin PBXFileReference section */
 		01F5F55D50528A5A10EB3BEE /* SliceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliceApp.swift; sourceTree = "<group>"; };
 		04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimerTests.swift; sourceTree = "<group>"; };
+		0BD9A6B8866CA154990ADC4E /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		0E26E5CAA50D7CE0D0FE4B7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		13F497FC8CD088E3CDE8F7EE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		3483908B057D6498F3453650 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,8 +43,11 @@
 		4109E3BE24B14E602030970D /* PomodoroTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroTimer.swift; sourceTree = "<group>"; };
 		410D313DA205222E05318D9D /* SliceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SliceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CD15552C07A47D2D8E1D2C /* Slice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D35218C5864E80513450281 /* AlertStyleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStyleTests.swift; sourceTree = "<group>"; };
+		4D6C0435CAF1D3B75D3BC2E1 /* Alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alarm.swift; sourceTree = "<group>"; };
 		A8B841D10A2D18E0BF498FB0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliceTests.swift; sourceTree = "<group>"; };
+		E3EEA2DD89E4095DAA70B213 /* AlertStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStyle.swift; sourceTree = "<group>"; };
 		EC20DC89A0CC4D9918729949 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -47,6 +55,7 @@
 		3870AC8F31EF86C2D3FD1903 /* SliceTests */ = {
 			isa = PBXGroup;
 			children = (
+				4D35218C5864E80513450281 /* AlertStyleTests.swift */,
 				3DBBA2075390DB2ADF0B5DFA /* NotificationsTests.swift */,
 				04D89E3CF3D4C9C8A221680B /* PomodoroTimerTests.swift */,
 				B78897905AA0BDCE9A6F65E3 /* SliceTests.swift */,
@@ -57,6 +66,9 @@
 		58325AFA3AF9C725A10EFF4D /* Slice */ = {
 			isa = PBXGroup;
 			children = (
+				4D6C0435CAF1D3B75D3BC2E1 /* Alarm.swift */,
+				0BD9A6B8866CA154990ADC4E /* AlarmView.swift */,
+				E3EEA2DD89E4095DAA70B213 /* AlertStyle.swift */,
 				0E26E5CAA50D7CE0D0FE4B7A /* Info.plist */,
 				EC20DC89A0CC4D9918729949 /* MenuBarView.swift */,
 				13F497FC8CD088E3CDE8F7EE /* Notifications.swift */,
@@ -188,6 +200,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA838CBB62ED978A477096E /* Alarm.swift in Sources */,
+				95A42E3210A446420A7BBAFE /* AlarmView.swift in Sources */,
+				3F0EF8CBB7D0D4B2D5AA70FB /* AlertStyle.swift in Sources */,
 				3BB37A0602D09DCEDFFFC3C9 /* MenuBarView.swift in Sources */,
 				EAB93CF0C6997A95F4DAFB32 /* Notifications.swift in Sources */,
 				109AB33CA097AB6A95C5A641 /* PomodoroTimer.swift in Sources */,
@@ -200,6 +215,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8AF32BA9DB554096286FC0C9 /* AlertStyleTests.swift in Sources */,
 				325B26F7A56BD092633D8DCD /* NotificationsTests.swift in Sources */,
 				2F49EB11660DDEB0B00AB719 /* PomodoroTimerTests.swift in Sources */,
 				73D020E368739BCADDA8C831 /* SliceTests.swift in Sources */,

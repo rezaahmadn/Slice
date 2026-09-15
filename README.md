@@ -46,7 +46,7 @@ Builds you make yourself are not quarantined, so they open directly.
 - Click the ring in the menu bar to open the panel.
 - **Start** begins a work session; the same button becomes **Pause**. **Reset** returns to an idle work session.
 - Work ends → break starts by itself and a banner says so. Break ends → back to idle; starting the next session is up to you.
-- The gear unfolds settings: work minutes, break minutes, launch at login.
+- The gear unfolds settings: work minutes, break minutes, launch at login, and the alert style — **Banner** (one notification) or **Alarm** (notification plus a floating window and a looping sound until you click Dismiss).
 - Cmd+Q in the panel quits.
 
 ## Project layout

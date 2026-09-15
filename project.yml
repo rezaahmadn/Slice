@@ -34,6 +34,9 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         # Menu-bar-only app: no Dock icon, no app menu.
         LSUIElement: true
+        # Notification Center and other modern lookups find the icon by asset name,
+        # not by CFBundleIconFile; without this the banner shows a blank icon.
+        CFBundleIconName: AppIcon
         NSHumanReadableCopyright: "MIT License"
     settings:
       base:
