@@ -148,7 +148,7 @@ Menu bar shows `25:00`. Click: popover with Start/Pause/Reset, phase name, gear 
 | 6 | Custom icon | App icon set + monochrome menu bar template image | complete | with 5 | 1 | [plan](../plans/phase-6-custom-icon.plan.md) |
 | 7 | Public release | README (build, Gatekeeper "Open Anyway", non-goals), LICENSE, GitHub Actions unsigned build on tag | complete | - | 5, 6 | [plan](../plans/phase-7-public-release.plan.md) |
 | 8 | Polish | README screenshots, GitHub Actions bumped to Node 24 majors, v0.1.1 | complete | - | 7 | [plan](../plans/phase-8-polish.plan.md) |
-| 9 | Alarm mode | Alert style setting: Banner or Alarm (floating window + looping sound until dismissed); full icon set; CFBundleIconName; v0.2.0 | in-progress | - | 8 | [plan](../plans/phase-9-alarm-mode.plan.md) |
+| 9 | Alarm mode | Alert style setting: Banner or Alarm (floating window + looping sound until dismissed); full icon set; CFBundleIconName; v0.2.0 | complete | - | 8 | [plan](../plans/phase-9-alarm-mode.plan.md) |
 
 ### Phase Details
 
@@ -225,4 +225,4 @@ Sources: https://help.apple.com/xcode/mac/current/en.lproj/dev033e997ca.html , h
 ---
 
 *Generated: 2026-09-15*
-*Status: v0.1.1 shipped 2026-09-15 — all 8 phases complete. Open: 30-day daily-use hypothesis; Developer ID signing when an account exists.*
+*Status: v0.2.0 shipped 2026-09-15 — all 9 phases complete. Open: 30-day daily-use hypothesis; Developer ID signing when an account exists.*
