@@ -140,8 +140,8 @@ Menu bar shows `25:00`. Click: popover with Start/Pause/Reset, phase name, gear 
 
 | # | Phase | Description | Status | Parallel | Depends | PRP Plan |
 |---|-------|-------------|--------|----------|---------|----------|
-| 1 | Project skeleton | Xcode project, `LSUIElement`, `MenuBarExtra` showing static `25:00`, git init, README stub, .gitignore | in-progress | - | - | [plan](../plans/phase-1-project-skeleton.plan.md) |
-| 2 | Timer core | `PomodoroTimer` model: phases, start/pause/reset, end-date ticking, auto-switch | pending | - | 1 | - |
+| 1 | Project skeleton | Xcode project, `LSUIElement`, `MenuBarExtra` showing static `25:00`, git init, README stub, .gitignore | complete | - | - | [plan](../plans/phase-1-project-skeleton.plan.md) |
+| 2 | Timer core | `PomodoroTimer` model: phases, start/pause/reset, end-date ticking, auto-switch | in-progress | - | 1 | [plan](../plans/phase-2-timer-core.plan.md) |
 | 3 | Menu bar UI | Live countdown in menu bar, popover with controls and phase label | pending | with 4 | 2 | - |
 | 4 | Notifications | Permission request, banner + sound on transitions | pending | with 3 | 2 | - |
 | 5 | Settings | Custom durations, launch at login, persisted | pending | with 6 | 3 | - |
