@@ -2,7 +2,7 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-**Status:** work in progress — Phase 1 of 7 (project skeleton). The menu bar shows a static `25:00`; the timer itself is next.
+**Status:** work in progress — Phase 2 of 7 (timer core). The menu bar still shows a static `25:00`; the timer model is done and tested, the UI binds to it next.
 
 ## Build from source
 
