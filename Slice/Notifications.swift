@@ -25,17 +25,23 @@ enum Notifications {
         }
     }
 
-    /// Title and body for the phase that just ended. Pure, so it is unit-tested.
-    static func content(for finished: PomodoroTimer.Phase) -> (title: String, body: String) {
-        switch finished {
-        case .work: ("Work done", "Take a break.")
-        case .shortBreak: ("Break over", "Back to work when you're ready.")
+    /// Title and body for the phase that just ended and what followed it.
+    /// Pure, so it is unit-tested.
+    static func content(
+        for finished: PomodoroTimer.Phase,
+        next: PomodoroTimer.Transition
+    ) -> (title: String, body: String) {
+        switch (finished, next) {
+        case (.work, _): ("Work done", "Take a break.")
+        case (.shortBreak, .workStarted): ("Break over", "Next work session is running.")
+        case (.shortBreak, .cyclesDone): ("All cycles done", "Start again when you're ready.")
+        case (.shortBreak, _): ("Break over", "Back to work when you're ready.")
         }
     }
 
     /// Delivers the notification now.
-    static func post(for finished: PomodoroTimer.Phase) {
-        let (title, body) = content(for: finished)
+    static func post(for finished: PomodoroTimer.Phase, next: PomodoroTimer.Transition) {
+        let (title, body) = content(for: finished, next: next)
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body

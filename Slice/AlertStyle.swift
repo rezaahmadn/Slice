@@ -5,7 +5,7 @@ import Foundation
 enum AlertStyle: String, CaseIterable {
     /// A normal macOS notification banner with one sound.
     case banner
-    /// The banner plus a floating window and a looping sound until dismissed.
+    /// Instead of the banner: a floating window and a looping sound until dismissed.
     case alarm
 
     static let defaultsKey = "alertStyle"

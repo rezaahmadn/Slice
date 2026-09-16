@@ -24,9 +24,9 @@ enum Alarm {
     private static var cutoffTask: Task<Void, Never>?
 
     /// Shows the window and starts the looping sound for the phase that ended.
-    static func show(for finished: PomodoroTimer.Phase) {
+    static func show(for finished: PomodoroTimer.Phase, next: PomodoroTimer.Transition) {
         dismiss()   // one alarm at a time
-        let (title, message) = Notifications.content(for: finished)
+        let (title, message) = Notifications.content(for: finished, next: next)
 
         let view = AlarmView(title: title, message: message) { dismiss() }
         // `NSHostingView` wraps a SwiftUI view so AppKit windows can show it.

@@ -33,12 +33,27 @@ final class PomodoroTimer {
         case paused
     }
 
+    /// What happened right after a phase finished. Drives the alert text.
+    enum Transition: Equatable {
+        /// A break started by itself (always, after work).
+        case breakStarted
+        /// The next work session started by itself: cycles are on and more remain.
+        case workStarted
+        /// Back to an idle work session; starting it is up to the user.
+        case idle
+        /// Back to idle because the last cycle just finished.
+        case cyclesDone
+    }
+
     // MARK: - Configuration (Phase 5 makes these user-editable)
 
     /// Length of a work session, in seconds.
     var workDuration: TimeInterval
     /// Length of a break, in seconds.
     var breakDuration: TimeInterval
+    /// How many work+break rounds run back to back from one press of Start.
+    /// `0` turns this off: one round, then idle, as before. No upper limit.
+    var cycles: Int
 
     // MARK: - Observable state
 
@@ -46,10 +61,13 @@ final class PomodoroTimer {
     private(set) var state: State = .idle
     /// Seconds left in the current phase. Never negative.
     private(set) var remaining: TimeInterval
+    /// Work sessions finished in the current run. Back to zero when the run
+    /// ends or on Reset. In memory only: a relaunch starts over.
+    private(set) var completedCycles = 0
 
-    /// Called on the main actor each time a phase finishes, with the phase that ended.
-    /// Phase 4 hooks notifications here.
-    var onPhaseCompleted: ((Phase) -> Void)?
+    /// Called on the main actor each time a phase finishes, with the phase that
+    /// ended and what happened next. Phase 4 hooks notifications here.
+    var onPhaseCompleted: ((_ finished: Phase, _ next: Transition) -> Void)?
 
     // MARK: - Private
 
@@ -60,9 +78,10 @@ final class PomodoroTimer {
     /// The background loop that calls `tick()` once a second while running.
     private var tickTask: Task<Void, Never>?
 
-    init(workDuration: TimeInterval = 25 * 60, breakDuration: TimeInterval = 5 * 60) {
+    init(workDuration: TimeInterval = 25 * 60, breakDuration: TimeInterval = 5 * 60, cycles: Int = 0) {
         self.workDuration = workDuration
         self.breakDuration = breakDuration
+        self.cycles = cycles
         self.remaining = workDuration
     }
 
@@ -87,11 +106,16 @@ final class PomodoroTimer {
     }
 
     /// Stops everything and returns to an idle work session at full length.
+    /// Also forgets finished cycles: Reset means "start the run over".
     func reset() {
-        stopTicking()
-        endDate = nil
-        phase = .work
-        state = .idle
+        completedCycles = 0
+        returnToIdleWork()
+    }
+
+    /// Re-reads `workDuration` while idle, e.g. after a settings stepper moves.
+    /// Unlike `reset()` this keeps the cycle count. Does nothing mid-session.
+    func refreshIdleDuration() {
+        guard state == .idle else { return }
         remaining = workDuration
     }
 
@@ -114,23 +138,51 @@ final class PomodoroTimer {
         return String(format: "%02d:%02d", totalSeconds / 60, totalSeconds % 60)
     }
 
+    /// "Cycle 2 of 4" for the panel, or `nil` when cycles are off.
+    /// During work it counts the session in progress; during a break, the one
+    /// that just finished.
+    var cycleLabel: String? {
+        guard cycles > 0 else { return nil }
+        let current = phase == .work ? completedCycles + 1 : completedCycles
+        return "Cycle \(min(current, cycles)) of \(cycles)"
+    }
+
     private func completePhase(now: Date) {
         let finished = phase
+        let next: Transition
         switch finished {
         case .work:
+            completedCycles += 1
             // The break starts by itself so you don't have to touch the timer.
             phase = .shortBreak
             remaining = breakDuration
             endDate = now.addingTimeInterval(breakDuration)
+            next = .breakStarted
         case .shortBreak:
-            // Back to an idle work session: starting the next one is a deliberate act.
-            stopTicking()
-            endDate = nil
-            phase = .work
-            state = .idle
-            remaining = workDuration
+            // `<` rather than `!=` so lowering the setting mid-run ends the run at
+            // the next break instead of running on until the counter wraps.
+            if cycles > 0 && completedCycles < cycles {
+                // More rounds to go: the next work session starts by itself.
+                phase = .work
+                remaining = workDuration
+                endDate = now.addingTimeInterval(workDuration)
+                next = .workStarted
+            } else {
+                // Back to an idle work session: starting the next one is a deliberate act.
+                next = cycles > 0 ? .cyclesDone : .idle
+                completedCycles = 0
+                returnToIdleWork()
+            }
         }
-        onPhaseCompleted?(finished)
+        onPhaseCompleted?(finished, next)
+    }
+
+    private func returnToIdleWork() {
+        stopTicking()
+        endDate = nil
+        phase = .work
+        state = .idle
+        remaining = workDuration
     }
 
     private func startTicking() {

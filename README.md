@@ -2,14 +2,14 @@
 
 Minimal Pomodoro timer for the macOS menu bar. Nothing else.
 
-A ring in the menu bar, a countdown next to it, Start / Pause / Reset in a small panel, a banner and a sound when work or break ends. Work and break lengths are configurable; it can launch at login. No task list, no stats, no sync, no account, no network.
+A ring in the menu bar, a countdown next to it, Start / Pause / Reset in a small panel, a banner and a sound when work or break ends. Work and break lengths are configurable, it can run a set number of cycles back to back, and it can launch at login. No task list, no stats, no sync, no account, no network.
 
 Requires macOS 26.
 
 <p><img src="Design/screenshots/menubar.png" width="300" alt="Slice in the menu bar: ring icon and 24:44"></p>
 <p>
   <img src="Design/screenshots/panel.png" width="280" alt="Slice panel: Work, 24:44, Pause, Reset, gear, Quit Slice">
-  <img src="Design/screenshots/panel-settings.png" width="280" alt="Slice panel with settings unfolded: work minutes, break minutes, launch at login">
+  <img src="Design/screenshots/panel-settings.png" width="280" alt="Slice panel with settings unfolded: work minutes, break minutes, cycles, launch at login, alert style">
 </p>
 
 ## Download
@@ -45,8 +45,8 @@ Builds you make yourself are not quarantined, so they open directly.
 
 - Click the ring in the menu bar to open the panel.
 - **Start** begins a work session; the same button becomes **Pause**. **Reset** returns to an idle work session.
-- Work ends → break starts by itself and a banner says so. Break ends → back to idle; starting the next session is up to you.
-- The gear unfolds settings: work minutes, break minutes, launch at login, and the alert style — **Banner** (one notification) or **Alarm** (notification plus a floating window and a looping sound until you click Dismiss).
+- Work ends → break starts by itself and an alert says so. Break ends → back to idle; starting the next session is up to you — unless **Cycles** is set, in which case the next work session starts by itself until that many rounds are done, then "All cycles done".
+- The gear unfolds settings: work minutes, break minutes, cycles (type any number; 0 = off), launch at login, and the alert style — **Banner** (one notification) or **Alarm** (a floating window and a looping sound until you click Dismiss, instead of the banner).
 - Cmd+Q in the panel quits.
 
 ## Project layout
@@ -60,8 +60,8 @@ Builds you make yourself are not quarantined, so they open directly.
 ## Releasing
 
 ```sh
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.3.0
+git push origin v0.3.0
 ```
 
 The version inside the app comes from the tag.

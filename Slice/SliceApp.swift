@@ -14,16 +14,19 @@ struct SliceApp: App {
         let defaults = UserDefaults.standard
         let workMinutes = defaults.object(forKey: "workMinutes") as? Int ?? 25
         let breakMinutes = defaults.object(forKey: "breakMinutes") as? Int ?? 5
+        let cycles = defaults.object(forKey: "cycles") as? Int ?? 0
         let timer = PomodoroTimer(
             workDuration: TimeInterval(workMinutes * 60),
-            breakDuration: TimeInterval(breakMinutes * 60)
+            breakDuration: TimeInterval(breakMinutes * 60),
+            cycles: cycles
         )
         // Wire the model's completion hook once, at launch. The alert style is
         // re-read every time so a change in Settings applies without a relaunch.
-        timer.onPhaseCompleted = { finished in
-            Notifications.post(for: finished)
-            if AlertStyle.load() == .alarm {
-                Alarm.show(for: finished)
+        // One or the other: the alarm window replaces the banner, not adds to it.
+        timer.onPhaseCompleted = { finished, next in
+            switch AlertStyle.load() {
+            case .banner: Notifications.post(for: finished, next: next)
+            case .alarm: Alarm.show(for: finished, next: next)
             }
         }
         // `_timer` is the `State` wrapper itself; this is how you seed `@State`

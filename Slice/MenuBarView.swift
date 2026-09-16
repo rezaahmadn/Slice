@@ -13,9 +13,17 @@ struct MenuBarView: View {
 
     var body: some View {
         VStack(spacing: 12) {
-            Text(timer.phase.title)
-                .font(.headline)
-                .foregroundStyle(.secondary)
+            VStack(spacing: 2) {
+                Text(timer.phase.title)
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                // Only shown while cycles are on (`cycleLabel` is nil otherwise).
+                if let cycleLabel = timer.cycleLabel {
+                    Text(cycleLabel)
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+            }
 
             Text(timer.displayText)
                 .font(.system(size: 44, weight: .light, design: .rounded))
